@@ -9,6 +9,9 @@ import AdminDashboard from './pages/AdminDashboard';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 
+import AdminLayout from './layouts/AdminLayout';
+import QRScanner from './components/Admin/QRScanner';
+
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
     const { currentUser } = useAuth();
@@ -17,48 +20,62 @@ const ProtectedRoute = ({ children }) => {
 
 // Admin Route Component
 const AdminRoute = ({ children }) => {
-    const { currentUser, userProfile } = useAuth();
+    const { currentUser, userProfile, loading } = useAuth();
 
-    if (!currentUser) {
+    if (loading) return null; // Wait for profile to load
+
+    if (!currentUser || userProfile?.role !== 'admin') {
         return <Navigate to="/login" />;
-    }
-
-    if (userProfile?.role !== 'admin') {
-        return <Navigate to="/" />;
     }
 
     return children;
 };
 
+import MatchManagement from './components/Admin/MatchManagement';
+
 function AppContent() {
     return (
         <div className="app">
-            <Navbar />
-            <main className="main-content">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/match/:matchId" element={<MatchDetails />} />
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <ProtectedRoute>
-                                <UserDashboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/admin"
-                        element={
-                            <AdminRoute>
-                                <AdminDashboard />
-                            </AdminRoute>
-                        }
-                    />
-                </Routes>
-            </main>
-            <Footer />
+            <Routes>
+                {/* Public Website Routes */}
+                <Route path="/*" element={
+                    <>
+                        <Navbar />
+                        <main className="main-content">
+                            <Routes>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/signup" element={<Signup />} />
+                                <Route path="/match/:matchId" element={<MatchDetails />} />
+                                <Route
+                                    path="/dashboard"
+                                    element={
+                                        <ProtectedRoute>
+                                            <UserDashboard />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                            </Routes>
+                        </main>
+                        <Footer />
+                    </>
+                } />
+
+                {/* Dedicated Admin Portal Routes */}
+                <Route
+                    path="/admin"
+                    element={
+                        <AdminRoute>
+                            <AdminLayout />
+                        </AdminRoute>
+                    }
+                >
+                    <Route index element={<AdminDashboard initialTab="stats" />} />
+                    <Route path="scanner" element={<QRScanner />} />
+                    <Route path="bookings" element={<AdminDashboard initialTab="bookings" />} />
+                    <Route path="matches" element={<MatchManagement />} />
+                </Route>
+            </Routes>
         </div>
     );
 }

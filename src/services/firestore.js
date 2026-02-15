@@ -9,7 +9,8 @@ import {
     query,
     where,
     orderBy,
-    Timestamp
+    Timestamp,
+    onSnapshot
 } from 'firebase/firestore';
 
 export const getAllMatches = async () => {
@@ -150,4 +151,78 @@ export const checkIfTicketScanned = async (bookingId) => {
         console.error('Error checking scanned ticket:', error);
         throw error;
     }
+};
+export const createMatch = async (matchData) => {
+    try {
+        const matchesRef = collection(db, 'matches');
+        const docRef = await addDoc(matchesRef, {
+            ...matchData,
+            createdAt: Timestamp.now()
+        });
+        return docRef.id;
+    } catch (error) {
+        console.error('Error creating match:', error);
+        throw error;
+    }
+};
+
+export const updateMatch = async (matchId, matchData) => {
+    try {
+        const matchRef = doc(db, 'matches', matchId);
+        await updateDoc(matchRef, {
+            ...matchData,
+            updatedAt: Timestamp.now()
+        });
+    } catch (error) {
+        console.error('Error updating match:', error);
+        throw error;
+    }
+};
+
+export const deleteMatch = async (matchId) => {
+    try {
+        // In a real app, you might want to check if there are bookings first
+        const matchRef = doc(db, 'matches', matchId);
+        await updateDoc(matchRef, {
+            status: 'deleted', // Soft delete is usually safer
+            deletedAt: Timestamp.now()
+        });
+    } catch (error) {
+        console.error('Error deleting match:', error);
+        throw error;
+    }
+};
+
+export const subscribeToAllBookings = (callback) => {
+    const bookingsRef = collection(db, 'bookings');
+    const q = query(
+        bookingsRef,
+        where('status', '==', 'confirmed')
+    );
+
+    return onSnapshot(q, (snapshot) => {
+        const bookings = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        // Sort in-memory to avoid index requirement
+        const sortedBookings = bookings.sort((a, b) => {
+            const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : new Date(a.createdAt).getTime();
+            const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : new Date(b.createdAt).getTime();
+            return timeB - timeA;
+        });
+        callback(sortedBookings);
+    }, (error) => {
+        console.error('Error in bookings subscription:', error);
+        callback([]); // Return empty so loading can finish
+    });
+};
+
+export const subscribeToAllMatches = (callback) => {
+    const matchesRef = collection(db, 'matches');
+    const q = query(matchesRef, orderBy('date', 'asc'));
+
+    return onSnapshot(q, (snapshot) => {
+        const matches = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        callback(matches);
+    }, (error) => {
+        console.error('Error in matches subscription:', error);
+    });
 };

@@ -63,10 +63,14 @@ export const AuthProvider = ({ children }) => {
         try {
             const userDoc = await getDoc(doc(db, 'users', uid));
             if (userDoc.exists()) {
-                setUserProfile({ id: userDoc.id, ...userDoc.data() });
+                const profile = { id: userDoc.id, ...userDoc.data() };
+                setUserProfile(profile);
+                return profile;
             }
+            return null;
         } catch (error) {
             console.error('Error fetching user profile:', error);
+            return null;
         }
     };
 
@@ -90,6 +94,7 @@ export const AuthProvider = ({ children }) => {
         signup,
         login,
         logout,
+        fetchUserProfile,
         loading
     };
 

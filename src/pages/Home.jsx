@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllMatches } from '../services/firestore';
+import { subscribeToAllMatches } from '../services/firestore';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import './Home.css';
 
@@ -9,19 +9,14 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchMatches();
-    }, []);
-
-    const fetchMatches = async () => {
-        try {
-            const matchesData = await getAllMatches();
-            setMatches(matchesData);
-        } catch (error) {
-            console.error('Error fetching matches:', error);
-        } finally {
+        const unsubscribe = subscribeToAllMatches((matchesData) => {
+            // Filter out soft-deleted matches
+            setMatches(matchesData.filter(m => m.status !== 'deleted'));
             setLoading(false);
-        }
-    };
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     const formatDate = (timestamp) => {
         if (!timestamp) return '';
