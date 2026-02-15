@@ -1,4 +1,4 @@
-import { QRCodeSVG } from 'qrcode.react';
+import { QRCodeCanvas } from 'qrcode.react';
 
 export const generateQRData = (bookingData) => {
     const qrData = {
@@ -22,7 +22,7 @@ export const parseQRData = (qrString) => {
 
 export const QRCodeComponent = ({ value, size = 256 }) => {
     return (
-        <QRCodeSVG
+        <QRCodeCanvas
             value={value}
             size={size}
             level="H"

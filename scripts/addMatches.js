@@ -1,14 +1,22 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Your Firebase configuration
+// Load environment variables from .env file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+// Your Firebase configuration from environment variables
 const firebaseConfig = {
-    apiKey: "AIzaSyD9hDVj2Ld1gH_S3CMU1I8HHRRLHPmN5-Y",
-    authDomain: "booking-project-c0008.firebaseapp.com",
-    projectId: "booking-project-c0008",
-    storageBucket: "booking-project-c0008.firebasestorage.app",
-    messagingSenderId: "144186783175",
-    appId: "1:144186783175:web:9668d5183e11bb723055e2"
+    apiKey: process.env.VITE_FIREBASE_API_KEY,
+    authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

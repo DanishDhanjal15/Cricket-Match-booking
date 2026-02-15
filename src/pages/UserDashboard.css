@@ -146,7 +146,35 @@
 }
 
 @media (max-width: 768px) {
+    .dashboard-header h1 {
+        font-size: 28px;
+    }
+
+    .dashboard-header p {
+        font-size: 16px;
+    }
+
     .bookings-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .ticket-card {
+        padding: 16px;
+    }
+
+    .ticket-footer .amount {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .qr-code-section {
+        padding: 10px;
+    }
+
+    .qr-code-section canvas {
+        width: 150px !important;
+        height: 150px !important;
     }
 }

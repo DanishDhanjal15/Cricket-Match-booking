@@ -161,9 +161,42 @@
 
     .booking-summary {
         position: static;
+        order: -1;
+        /* Move summary above seat selection for better mobile context */
+    }
+}
+
+@media (max-width: 600px) {
+    .match-header-section h1 {
+        font-size: 24px;
+    }
+
+    .match-info p {
+        font-size: 16px;
+    }
+
+    .stadium-view {
+        padding: 15px;
     }
 
     .seats-grid {
         grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+    }
+
+    .seat {
+        font-size: 10px;
+    }
+
+    .seat-legend {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .seats-grid {
+        grid-template-columns: repeat(4, 1fr);
     }
 }

@@ -32,7 +32,7 @@
 
 .matches-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 30px;
 }
 
@@ -42,6 +42,59 @@
     padding: 24px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Base styles for match card continue... */
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 50px 20px;
+        margin-bottom: 30px;
+    }
+
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .hero-subtitle {
+        font-size: 16px;
+    }
+
+    .matches-section h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .matches-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .match-teams {
+        gap: 10px;
+    }
+
+    .team-flag {
+        font-size: 36px;
+    }
+
+    .team-name {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .match-card {
+        padding: 16px;
+    }
+
+    .price {
+        font-size: 20px;
+    }
+
+    .match-footer .btn {
+        padding: 8px 16px;
+    }
 }
 
 .match-card:hover {

@@ -91,3 +91,26 @@
     color: var(--primary);
     margin-bottom: 10px;
 }
+
+@media (max-width: 480px) {
+    .qr-scanner-container {
+        padding: 10px;
+    }
+
+    .scan-result {
+        padding: 20px;
+    }
+
+    .result-header {
+        font-size: 18px;
+        padding: 15px;
+    }
+
+    .result-details h3 {
+        font-size: 18px;
+    }
+
+    .result-details p {
+        font-size: 14px;
+    }
+}

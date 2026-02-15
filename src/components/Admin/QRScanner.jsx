@@ -35,7 +35,17 @@ const QRScanner = () => {
 
     const onScanSuccess = async (decodedText) => {
         try {
+            // Stop scanning immediately before processing result to avoid DOM conflicts
+            if (scannerRef.current) {
+                try {
+                    await scannerRef.current.clear();
+                } catch (e) {
+                    console.warn('Failed to clear scanner:', e);
+                }
+            }
+            setScanning(false);
             setError('');
+
             const qrData = parseQRData(decodedText);
 
             if (!qrData || !qrData.bookingId) {
@@ -92,15 +102,19 @@ const QRScanner = () => {
     const resetScanner = () => {
         setScanResult(null);
         setError('');
+        // Small delay to ensure React has rendered the #qr-reader div before starting
+        setTimeout(() => startScanner(), 100);
     };
 
     return (
         <div className="qr-scanner-container">
             <h2>Scan Ticket QR Code</h2>
 
-            {!scanResult && (
-                <div id="qr-reader" className="qr-reader"></div>
-            )}
+            <div
+                id="qr-reader"
+                className="qr-reader"
+                style={{ display: scanResult || error ? 'none' : 'block' }}
+            ></div>
 
             {error && (
                 <div className="scan-error">
