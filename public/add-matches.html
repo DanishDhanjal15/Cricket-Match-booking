@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sample Matches</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f7fafc;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🏏 Add Sample Cricket Matches</h1>
+        <p>Click the button below to automatically add 3 sample cricket matches to your Firestore database.</p>
+
+        <button id="addMatchesBtn" onclick="addMatches()">Add Sample Matches</button>
+        <button onclick="window.location.href='/'">Go to Homepage</button>
+
+        <div id="status"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD9hDVj2Ld1gH_S3CMU1I8HHRRLHPmN5-Y",
+            authDomain: "booking-project-c0008.firebaseapp.com",
+            projectId: "booking-project-c0008",
+            storageBucket: "booking-project-c0008.firebasestorage.app",
+            messagingSenderId: "144186783175",
+            appId: "1:144186783175:web:9668d5183e11bb723055e2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Sample matches
+        const matches = [
+            {
+                team1: "India",
+                team1Flag: "🇮🇳",
+                team2: "Australia",
+                team2Flag: "🇦🇺",
+                matchType: "T20",
+                venue: "Wankhede Stadium, Mumbai",
+                date: Timestamp.fromDate(new Date("2026-02-20T19:00:00")),
+                basePrice: 1500,
+                availableSeats: 500,
+                createdAt: Timestamp.now()
+            },
+            {
+                team1: "India",
+                team1Flag: "🇮🇳",
+                team2: "England",
+                team2Flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+                matchType: "ODI",
+                venue: "Eden Gardens, Kolkata",
+                date: Timestamp.fromDate(new Date("2026-02-25T14:00:00")),
+                basePrice: 2000,
+                availableSeats: 600,
+                createdAt: Timestamp.now()
+            },
+            {
+                team1: "India",
+                team1Flag: "🇮🇳",
+                team2: "South Africa",
+                team2Flag: "🇿🇦",
+                matchType: "T20",
+                venue: "M. Chinnaswamy Stadium, Bangalore",
+                date: Timestamp.fromDate(new Date("2026-03-01T19:30:00")),
+                basePrice: 1800,
+                availableSeats: 450,
+                createdAt: Timestamp.now()
+            }
+        ];
+
+        // Make function global
+        window.addMatches = async function () {
+            const btn = document.getElementById('addMatchesBtn');
+            const status = document.getElementById('status');
+
+            btn.disabled = true;
+            status.style.display = 'block';
+            status.className = 'info';
+            status.innerHTML = '⏳ Adding matches to Firestore...';
+
+            try {
+                let addedMatches = [];
+
+                for (const match of matches) {
+                    const docRef = await addDoc(collection(db, 'matches'), match);
+                    addedMatches.push(`✅ ${match.team1} vs ${match.team2} (${match.matchType})`);
+                    console.log(`Match added: ${match.team1} vs ${match.team2}`);
+                }
+
+                status.className = 'success';
+                status.innerHTML = `
+                    <h3>🎉 Success! All matches added!</h3>
+                    <pre>${addedMatches.join('\n')}</pre>
+                    <p><strong>Next step:</strong> Go to the homepage to see your matches!</p>
+                `;
+
+            } catch (error) {
+                console.error('Error adding matches:', error);
+                status.className = 'error';
+                status.innerHTML = `
+                    <h3>❌ Error adding matches</h3>
+                    <p>${error.message}</p>
+                    <p>Make sure you've enabled Firestore in Firebase Console and updated the security rules.</p>
+                `;
+            } finally {
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+
+</html>

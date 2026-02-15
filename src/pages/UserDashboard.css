@@ -1,0 +1,152 @@
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.dashboard-header {
+    margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+    font-size: 36px;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.dashboard-header p {
+    font-size: 18px;
+    color: var(--text);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.empty-state h2 {
+    font-size: 28px;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: var(--text);
+    margin-bottom: 30px;
+}
+
+.bookings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.ticket-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.ticket-card:hover {
+    transform: translateY(-5px);
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.confirmed {
+    background: #d1fae5;
+    color: var(--success);
+}
+
+.status-badge.pending {
+    background: #fed7aa;
+    color: var(--warning);
+}
+
+.booking-id {
+    font-size: 12px;
+    color: var(--text);
+    font-family: monospace;
+}
+
+.ticket-match-info h3 {
+    font-size: 20px;
+    color: var(--dark);
+    margin-bottom: 12px;
+}
+
+.ticket-match-info p {
+    color: var(--text);
+    margin: 8px 0;
+}
+
+.qr-code-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: var(--light);
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.qr-code-section canvas,
+.qr-code-section svg {
+    margin-bottom: 15px;
+}
+
+.btn-download {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-download:hover {
+    background: var(--secondary);
+}
+
+.ticket-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.ticket-footer .amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.ticket-footer .date {
+    font-size: 14px;
+    color: var(--text);
+}
+
+@media (max-width: 768px) {
+    .bookings-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "team1": "India",
+    "team1Flag": "🇮🇳",
+    "team2": "Australia",
+    "team2Flag": "🇦🇺",
+    "matchType": "T20",
+    "venue": "Wankhede Stadium, Mumbai",
+    "basePrice": 1500,
+    "availableSeats": 500
+}

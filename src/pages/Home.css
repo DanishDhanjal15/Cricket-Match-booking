@@ -1,0 +1,124 @@
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 80px 40px;
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    opacity: 0.9;
+}
+
+.matches-section h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: var(--dark);
+}
+
+.matches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.match-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.match-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.match-type {
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.match-date {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.match-teams {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.team-flag {
+    font-size: 48px;
+}
+
+.team-name {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.vs {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.match-details {
+    margin: 20px 0;
+    padding: 15px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.match-details p {
+    margin: 8px 0;
+    color: var(--text);
+}
+
+.match-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.price {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+}

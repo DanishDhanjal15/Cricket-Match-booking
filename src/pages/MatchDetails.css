@@ -1,0 +1,169 @@
+.match-details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.match-header-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.match-header-section h1 {
+    font-size: 36px;
+    color: var(--dark);
+    margin-bottom: 20px;
+}
+
+.match-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.match-info p {
+    font-size: 18px;
+    color: var(--text);
+}
+
+.booking-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+}
+
+.seat-selection h2,
+.booking-summary h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--dark);
+}
+
+.seat-info {
+    color: var(--text);
+    margin-bottom: 20px;
+}
+
+.stadium-view {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pitch {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.seats-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.seat {
+    aspect-ratio: 1;
+    border: 2px solid var(--border);
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.seat:hover:not(:disabled) {
+    transform: scale(1.1);
+    border-color: var(--primary);
+}
+
+.seat.selected {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.seat:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.seat-legend {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-item .seat {
+    width: 30px;
+    height: 30px;
+    cursor: default;
+}
+
+.booking-summary {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    position: sticky;
+    top: 90px;
+}
+
+.summary-details {
+    margin: 20px 0;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.summary-row.total {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    border-bottom: none;
+    margin-top: 10px;
+}
+
+.btn-book-now {
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+}
+
+.error-container {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+@media (max-width: 968px) {
+    .booking-section {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-summary {
+        position: static;
+    }
+
+    .seats-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
