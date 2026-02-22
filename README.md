@@ -1,6 +1,6 @@
 # Cricket Stadium Booking System
 
-A comprehensive web application for booking cricket match tickets with QR code generation, Razorpay payment integration, and admin dashboard for ticket verification.
+A comprehensive web application for booking cricket match tickets with QR code generation, Razorpay payment integration, and admin dashboard for ticket verification
 
 ## Features
 
